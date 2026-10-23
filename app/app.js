@@ -355,11 +355,164 @@ function bildschirmProfil() {
     </section>
 
     <section class="abschnitt">
+      <h2>Für Gastgeber</h2>
+      <label class="schalter" for="gastgeber-schalter">
+        Gastgeber-Modus
+        <input id="gastgeber-schalter" type="checkbox" role="switch" ${daten.gastgeberModus ? 'checked' : ''}>
+      </label>
+      <p class="hinweis" id="gastgeber-info" role="status">${gastgeberInfo()}</p>
+    </section>
+
+    <section class="abschnitt">
       <h2>Prototyp</h2>
       <p class="hinweis">Alles wird nur in diesem Browser gespeichert. Mit diesem Knopf
         beginnst du wieder mit frischen Beispieltouren – Profil und Anmeldungen werden gelöscht.</p>
       <button class="knopf knopf--hell" type="button" data-aktion="zuruecksetzen">Beispieldaten zurücksetzen</button>
     </section>`;
+}
+
+function gastgeberInfo() {
+  return daten.gastgeberModus
+    ? 'Eingeschaltet: Unten in der Leiste findest du jetzt „Gastgeber“.'
+    : 'Damit legst du Touren an und siehst die Teilnehmerlisten. Im Prototyp ohne Login.';
+}
+
+// Gastgeber: Übersicht aller kommenden Touren mit Anzahl der Anmeldungen
+function bildschirmGastgeber() {
+  if (!daten.gastgeberModus) {
+    return `<h1>Gastgeber</h1>
+      <p class="leer">Der Gastgeber-Modus ist ausgeschaltet. Du kannst ihn im Profil einschalten.</p>
+      <div class="knopfreihe"><a class="knopf" href="#/profil">Zum Profil</a></div>`;
+  }
+
+  const karten = kommendeTouren().map(function (tour) {
+    const belegt = tour.plaetze - freiePlaetze(tour);
+    return `
+      <li>
+        <a class="karte tourkarte" href="#/gastgeber/tour/${sicher(tour.id)}">
+          <span class="dachzeile">${sicher(wannKurz(tour))}</span>
+          <h2>${sicher(tour.name)}</h2>
+          <p class="tourkarte__werte">${sicher(tour.gastgeber)}</p>
+          <div class="tourkarte__fuss">
+            <span class="plaetze">${belegt} von ${sicher(tour.plaetze)} Plätzen belegt</span>
+            ${tour.beispiel ? '<span class="etikett">Beispieltermin</span>' : ''}
+          </div>
+        </a>
+      </li>`;
+  }).join('');
+
+  return `
+    ${meldungHtml()}
+    <h1>Gastgeber</h1>
+    <p class="einleitung">Tour anlegen, Teilnehmerliste ansehen und die Abholpunkte entlang der Route festlegen.</p>
+    <div class="knopfreihe knopfreihe--details"><a class="knopf" href="#/gastgeber/neu">+ Neue Tour anlegen</a></div>
+    <h2>Teilnehmerlisten</h2>
+    ${karten ? `<ul class="liste">${karten}</ul>` : '<p class="leer">Noch keine Touren geplant.</p>'}`;
+}
+
+// Gastgeber: Formular für eine neue Tour
+function bildschirmNeueTour() {
+  const heute = datumAlsText(new Date());
+  return `
+    <a class="zurueck" href="#/gastgeber">← Zurück</a>
+    <h1>Neue Tour anlegen</h1>
+    <form class="formular" id="tour-formular">
+      <div class="zwei-spalten">
+        <div>
+          <label for="tour-datum">Datum</label>
+          <input id="tour-datum" name="datum" type="date" min="${heute}" required>
+        </div>
+        <div>
+          <label for="tour-uhrzeit">Uhrzeit</label>
+          <input id="tour-uhrzeit" name="uhrzeit" type="time" required>
+        </div>
+      </div>
+      <div>
+        <label for="tour-name">Name der Tour</label>
+        <input id="tour-name" name="name" type="text" required placeholder="z. B. Reichenau-Runde">
+      </div>
+      <div>
+        <label for="tour-strecke">Strecke</label>
+        <input id="tour-strecke" name="strecke" type="text" required placeholder="z. B. Konstanz – Insel Reichenau – Konstanz">
+      </div>
+      <div class="zwei-spalten">
+        <div>
+          <label for="tour-km">Kilometer</label>
+          <input id="tour-km" name="km" type="number" inputmode="numeric" min="1" max="999" required>
+        </div>
+        <div>
+          <label for="tour-hm">Höhenmeter</label>
+          <input id="tour-hm" name="hm" type="number" inputmode="numeric" min="0" max="9999" required>
+        </div>
+      </div>
+      <div>
+        <label for="tour-treffpunkt">Treffpunkt bzw. Abholung</label>
+        <textarea id="tour-treffpunkt" name="treffpunkt" required
+          placeholder="Fester Treffpunkt oder: Abholung entlang der Route"></textarea>
+      </div>
+      <div>
+        <label for="tour-plaetze">Plätze</label>
+        <input id="tour-plaetze" name="plaetze" type="number" inputmode="numeric" min="1" max="7" value="${PLAETZE_PRO_TOUR}" required>
+      </div>
+      <div>
+        <label for="tour-beschreibung">Beschreibung <span class="optional">(optional)</span></label>
+        <textarea id="tour-beschreibung" name="beschreibung" placeholder="Was erwartet die Gruppe? Tempo, Einkehr …"></textarea>
+      </div>
+      <div>
+        <label for="tour-gastgeber">Gastgeber</label>
+        <input id="tour-gastgeber" name="gastgeber" type="text" required value="${sicher(daten.profil.name)}">
+      </div>
+      <button class="knopf" type="submit">Tour anlegen</button>
+    </form>`;
+}
+
+// Gastgeber: Teilnehmerliste einer Tour, dazu Treffpunkt/Abholpunkte bearbeiten
+function bildschirmTeilnehmerliste(id) {
+  const tour = tourFinden(id);
+  if (!tour) {
+    return `<a class="zurueck" href="#/gastgeber">← Zurück</a>
+      <h1>Tour nicht gefunden</h1>`;
+  }
+
+  const echte = tour.teilnehmer.map(function (person) {
+    return `<li>
+      <strong>${sicher(person.name)}${person.ich ? ' (du)' : ''}</strong>
+      <a href="mailto:${sicher(person.email)}">${sicher(person.email)}</a>
+      ${person.telefon ? `<br><a href="tel:${sicher(person.telefon)}">${sicher(person.telefon)}</a>` : ''}
+    </li>`;
+  });
+  // Die ausgedachten Anmeldungen der Beispieltouren als Platzhalter zeigen
+  const beispiele = [];
+  for (let i = 1; i <= tour.beispielAnmeldungen; i++) {
+    beispiele.push(`<li><strong>Beispiel-Teilnehmer ${i}</strong><span>Platzhalter, keine echte Person</span></li>`);
+  }
+  const alle = echte.concat(beispiele);
+  const belegt = tour.plaetze - freiePlaetze(tour);
+
+  return `
+    <a class="zurueck" href="#/gastgeber">← Zurück</a>
+    ${meldungHtml()}
+    <span class="dachzeile">${sicher(wannKurz(tour))}</span>
+    <h1>${sicher(tour.name)}</h1>
+    <p class="einleitung">${belegt} von ${sicher(tour.plaetze)} Plätzen belegt</p>
+
+    <section class="abschnitt">
+      <h2>Teilnehmerliste</h2>
+      ${alle.length ? `<ul class="teilnehmer">${alle.join('')}</ul>` : '<p class="leer">Noch keine Anmeldungen.</p>'}
+    </section>
+
+    <section class="abschnitt">
+      <h2>Abholung planen</h2>
+      <form class="formular" id="treffpunkt-formular" data-id="${sicher(tour.id)}">
+        <div>
+          <label for="treffpunkt">Treffpunkt bzw. Abholpunkte entlang der Route</label>
+          <textarea id="treffpunkt" name="treffpunkt" required>${sicher(tour.treffpunkt)}</textarea>
+        </div>
+        <button class="knopf" type="submit">Speichern</button>
+      </form>
+    </section>
+
+    <div class="knopfreihe"><a class="knopf knopf--hell" href="#/tour/${sicher(tour.id)}">So sehen Teilnehmer die Tour</a></div>`;
 }
 
 
@@ -429,6 +582,47 @@ function profilSpeichern(formular) {
   }
 }
 
+function tourAnlegen(formular) {
+  const f = formular.elements;
+  const tour = {
+    id: 'tour-' + Date.now().toString(36),   // eindeutige Kennung aus der aktuellen Uhrzeit
+    datum: f.datum.value,
+    uhrzeit: f.uhrzeit.value,
+    name: f.name.value.trim(),
+    strecke: f.strecke.value.trim(),
+    beschreibung: f.beschreibung.value.trim(),
+    km: Number(f.km.value),
+    hm: Number(f.hm.value),
+    treffpunkt: f.treffpunkt.value.trim(),
+    plaetze: Number(f.plaetze.value),
+    gastgeber: f.gastgeber.value.trim(),
+    beispiel: false,
+    beispielAnmeldungen: 0,
+    teilnehmer: []
+  };
+  daten.touren.push(tour);
+  speichern();
+  meldung = 'Die Tour „' + tour.name + '“ ist angelegt und steht jetzt in der Touren-Liste.';
+  location.hash = '#/gastgeber/tour/' + tour.id;
+}
+
+function treffpunktSpeichern(formular) {
+  const tour = tourFinden(formular.dataset.id);
+  if (!tour) return;
+  tour.treffpunkt = formular.elements.treffpunkt.value.trim();
+  speichern();
+  meldung = 'Treffpunkt und Abholung gespeichert.';
+  zeigen();
+}
+
+// Gastgeber-Modus ein- oder ausschalten (ohne den Bildschirm neu aufzubauen)
+function gastgeberUmschalten(eingeschaltet) {
+  daten.gastgeberModus = eingeschaltet;
+  speichern();
+  leisteAktualisieren();
+  document.getElementById('gastgeber-info').textContent = gastgeberInfo();
+}
+
 function zuruecksetzen() {
   if (!window.confirm('Wirklich alles löschen und mit frischen Beispieltouren beginnen?')) return;
   daten = startdatenErzeugen();
@@ -454,13 +648,31 @@ inhaltBereich.addEventListener('click', function (ereignis) {
 // Formulare abschicken. Der Browser hat dann schon geprüft, ob alle Pflichtfelder ausgefüllt sind.
 inhaltBereich.addEventListener('submit', function (ereignis) {
   ereignis.preventDefault();   // sonst würde die Seite neu laden
-  if (ereignis.target.id === 'profil-formular') profilSpeichern(ereignis.target);
+  switch (ereignis.target.id) {
+    case 'profil-formular': profilSpeichern(ereignis.target); break;
+    case 'tour-formular': tourAnlegen(ereignis.target); break;
+    case 'treffpunkt-formular': treffpunktSpeichern(ereignis.target); break;
+  }
+});
+
+inhaltBereich.addEventListener('change', function (ereignis) {
+  if (ereignis.target.id === 'gastgeber-schalter') gastgeberUmschalten(ereignis.target.checked);
 });
 
 
 // 6. Navigation zwischen den Bildschirmen -------------------------------------
 // Die Adresse hinter dem # bestimmt den Bildschirm, z. B. „#/touren“ oder „#/tour/abc“.
 // So funktionieren auch der Zurück-Knopf des Handys und Links auf GitHub Pages.
+
+// Untere Leiste: aktuellen Menüpunkt hervorheben, „Gastgeber“ nur im Gastgeber-Modus zeigen
+function leisteAktualisieren(menuepunkt) {
+  document.querySelectorAll('.leiste a').forEach(function (link) {
+    if (link.dataset.bereich === 'gastgeber') link.hidden = !daten.gastgeberModus;
+    if (menuepunkt === undefined) return;
+    if (link.dataset.bereich === menuepunkt) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+}
 
 function zeigen() {
   const teile = location.hash.replace(/^#\/?/, '').split('/');
@@ -473,16 +685,16 @@ function zeigen() {
     case 'tour':      html = bildschirmTourDetails(teile[1]); menuepunkt = 'touren'; break;
     case 'meine':     html = bildschirmMeineTouren(); break;
     case 'profil':    html = bildschirmProfil(); break;
+    case 'gastgeber':
+      if (teile[1] === 'neu' && daten.gastgeberModus) html = bildschirmNeueTour();
+      else if (teile[1] === 'tour' && daten.gastgeberModus) html = bildschirmTeilnehmerliste(teile[2]);
+      else html = bildschirmGastgeber();
+      break;
     default:          html = bildschirmTouren(); menuepunkt = 'touren';
   }
 
   inhaltBereich.innerHTML = html;
-
-  // Menüpunkt unten hervorheben
-  document.querySelectorAll('.leiste a').forEach(function (link) {
-    if (link.dataset.bereich === menuepunkt) link.setAttribute('aria-current', 'page');
-    else link.removeAttribute('aria-current');
-  });
+  leisteAktualisieren(menuepunkt);
 
   // Nach oben springen und die Überschrift „ansteuern“ (hilft Vorleseprogrammen)
   window.scrollTo(0, 0);

@@ -269,12 +269,13 @@ h1:focus { outline: none; }
 .hinweis--unten { margin-top: 1.25rem; }
 
 /* Formulare */
-.formular { display: grid; gap: 1.25rem; }
+.formular { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
 .formular label { display: block; font-weight: 700; margin-bottom: 0.3rem; }
 .formular .optional { font-weight: 400; color: var(--grau); }
 .formular input,
 .formular textarea {
   width: 100%;
+  min-width: 0;             /* Datums- und Zeitfelder sonst auf dem Handy zu breit */
   min-height: 3.25rem;
   padding: 0.7rem 1rem;
   border: 2px solid #8C9AA6;
@@ -290,7 +291,7 @@ h1:focus { outline: none; }
   outline: 3px solid var(--see-hell);
   outline-offset: 0;
 }
-.formular .zwei-spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.formular .zwei-spalten { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
 
 /* Schalter (für den Gastgeber-Modus): ein Kontrollkästchen, das wie ein Schalter aussieht */
 .schalter {
@@ -400,6 +401,6 @@ h1:focus { outline: none; }
 
 /* Auf sehr schmalen Handys: Formularfelder untereinander */
 @media (max-width: 22rem) {
-  .formular .zwei-spalten { grid-template-columns: 1fr; }
+  .formular .zwei-spalten { grid-template-columns: minmax(0, 1fr); }
   .kennzahlen { grid-template-columns: 1fr 1fr; }
 }
