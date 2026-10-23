@@ -151,6 +151,14 @@ a:hover { color: var(--tinte); }
 
 .menue a:hover { background: var(--sand); }
 
+/* Link zur App: mit blauem Rahmen, damit er auffällt */
+.menue a.menue__app {
+  border: 2px solid var(--see);
+  color: var(--see);
+  padding: calc(0.4rem - 2px) calc(0.8rem - 2px);
+}
+.menue a.menue__app:hover { background: var(--see); color: var(--weiss); }
+
 /* Die aktuelle Seite wird im Menü blau hervorgehoben */
 .menue a[aria-current="page"] {
   background: var(--see);
