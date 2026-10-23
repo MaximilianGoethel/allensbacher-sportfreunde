@@ -1,0 +1,403 @@
+/* ==========================================================================
+   Allensbacher Sportfreunde – Gestaltung der App
+   --------------------------------------------------------------------------
+   Gleiche Farben und Schriften wie die Website (css/style.css), aber für das
+   Handy gebaut: große Schrift, große Knöpfe, Navigationsleiste unten.
+
+   Aufbau dieser Datei:
+   1. Farben und Grundwerte
+   2. Grundlagen
+   3. Hinweis, Kopf und Navigationsleiste
+   4. Bausteine (Karten, Knöpfe, Formulare ...)
+   5. Bildschirme (Touren, Details, Profil, Gastgeber)
+   ========================================================================== */
+
+
+/* 1. Farben und Grundwerte --------------------------------------------------
+   Dieselben Werte wie auf der Website. Ändert man dort eine Farbe,
+   sollte man sie hier auch ändern. */
+:root {
+  --creme:        #FAF6EF;
+  --sand:         #F3E8DB;
+  --sand-dunkel:  #E6D8C6;
+  --see:          #2E6B8A;
+  --see-hell:     #DCEAF1;
+  --orange:       #E8834A;
+  --orange-text:  #A54817;
+  --orange-hell:  #FBE6D4;
+  --tinte:        #1F2D3A;
+  --grau:         #4A5561;
+  --weiss:        #FFFFFF;
+
+  --schrift-titel: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --schrift-text:  system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --rund: 1rem;
+  --leiste-hoehe: 4.75rem;  /* Höhe der unteren Navigationsleiste */
+}
+
+
+/* 2. Grundlagen -------------------------------------------------------------
+   1rem = 18px. Keine Schrift in der App ist kleiner als 1rem. */
+html {
+  font-size: 112.5%;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--creme);
+  color: var(--tinte);
+  font-family: var(--schrift-text);
+  font-size: 1.1rem;        /* ca. 20px */
+  line-height: 1.55;
+  /* Platz lassen, damit die Leiste unten nichts verdeckt */
+  padding-bottom: calc(var(--leiste-hoehe) + env(safe-area-inset-bottom));
+}
+
+h1, h2, h3 {
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.2rem; }
+
+p { margin: 0 0 1em; }
+
+a { color: var(--see); text-underline-offset: 0.2em; }
+
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* Die Überschrift bekommt beim Bildschirmwechsel den Fokus (für Vorleseprogramme),
+   soll dabei aber keinen Rahmen zeigen. */
+h1:focus { outline: none; }
+
+[hidden] { display: none !important; }
+
+
+/* 3. Hinweis, Kopf und Navigationsleiste ------------------------------------ */
+
+/* Dezenter Streifen ganz oben */
+.prototyp-hinweis {
+  margin: 0;
+  padding: 0.4rem 1rem;
+  padding-top: calc(0.4rem + env(safe-area-inset-top));
+  background: var(--sand);
+  color: var(--grau);
+  font-size: 1rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.app-kopf {
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--sand-dunkel);
+}
+.app-logo {
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--see);
+  text-decoration: none;
+}
+
+.app-inhalt {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2rem;
+}
+.app-inhalt:focus { outline: none; }
+
+/* Untere Navigationsleiste, immer sichtbar */
+.leiste {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  background: var(--weiss);
+  border-top: 1px solid var(--sand-dunkel);
+  padding-bottom: env(safe-area-inset-bottom);   /* Abstand zum Home-Balken am iPhone */
+}
+.leiste a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-height: var(--leiste-hoehe);
+  color: var(--grau);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.leiste svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.leiste a[aria-current="page"] {
+  color: var(--see);
+  background: var(--see-hell);
+}
+
+
+/* 4. Bausteine --------------------------------------------------------------- */
+
+/* Kleine orange Zeile über Titeln, z. B. „MI · 18:00“ */
+.dachzeile {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange-text);
+  margin-bottom: 0.2rem;
+}
+
+.einleitung { color: var(--grau); }
+
+.karte {
+  display: block;
+  background: var(--weiss);
+  border: 1px solid var(--sand-dunkel);
+  border-radius: var(--rund);
+  padding: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+/* Große Knöpfe: mindestens 3.5rem (63px) hoch, gut zu treffen */
+.knopf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--see);
+  border-radius: 999px;
+  background: var(--see);
+  color: var(--weiss);
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.knopf:active { background: var(--tinte); border-color: var(--tinte); }
+
+.knopf--hell { background: var(--weiss); color: var(--see); }
+.knopf--hell:active { background: var(--see-hell); }
+
+/* Abmelden: bewusst anders als „Anmelden“, damit man es nicht verwechselt */
+.knopf--abmelden { background: var(--weiss); color: var(--orange-text); border-color: var(--orange-text); }
+.knopf--abmelden:active { background: var(--orange-hell); }
+
+.knopf:disabled {
+  background: var(--sand-dunkel);
+  border-color: var(--sand-dunkel);
+  color: var(--grau);
+  cursor: not-allowed;
+}
+
+.knopfreihe { display: grid; gap: 0.75rem; margin-top: 1.5rem; }
+
+/* Zurück-Link oben auf Unterseiten */
+.zurueck {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  margin: -0.5rem 0 0.5rem;
+  font-weight: 600;
+}
+
+/* Kleines Etikett, z. B. „Beispieltermin“ */
+.etikett {
+  display: inline-block;
+  padding: 0.1rem 0.75rem;
+  border-radius: 999px;
+  background: var(--orange-hell);
+  color: #8A3E14;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Rückmeldung nach einer Aktion */
+.meldung {
+  padding: 1rem 1.25rem;
+  border-radius: var(--rund);
+  background: var(--see-hell);
+  border-left: 5px solid var(--see);
+  margin-bottom: 1.25rem;
+}
+
+.leer {
+  padding: 1.5rem 1.25rem;
+  border: 2px dashed var(--sand-dunkel);
+  border-radius: var(--rund);
+  color: var(--grau);
+  text-align: center;
+}
+
+.hinweis { color: var(--grau); font-size: 1rem; }
+
+/* Formulare */
+.formular { display: grid; gap: 1.25rem; }
+.formular label { display: block; font-weight: 700; margin-bottom: 0.3rem; }
+.formular .optional { font-weight: 400; color: var(--grau); }
+.formular input,
+.formular textarea {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.7rem 1rem;
+  border: 2px solid #8C9AA6;
+  border-radius: 0.6rem;
+  background: var(--weiss);
+  color: var(--tinte);
+  font: inherit;
+}
+.formular textarea { min-height: 7rem; resize: vertical; }
+.formular input:focus,
+.formular textarea:focus {
+  border-color: var(--see);
+  outline: 3px solid var(--see-hell);
+  outline-offset: 0;
+}
+.formular .zwei-spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* Schalter (für den Gastgeber-Modus): ein Kontrollkästchen, das wie ein Schalter aussieht */
+.schalter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.schalter input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  position: relative;
+  width: 4rem;
+  height: 2.25rem;
+  margin: 0;
+  border-radius: 999px;
+  background: #8C9AA6;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.schalter input::after {
+  content: "";
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--weiss);
+  transition: transform 0.2s;
+}
+.schalter input:checked { background: var(--see); }
+.schalter input:checked::after { transform: translateX(1.75rem); }
+
+
+/* 5. Bildschirme ------------------------------------------------------------- */
+
+/* Touren-Liste: jede Karte ist ein großer Link zu den Details */
+.tourkarte h2 { margin: 0.1rem 0 0.2rem; font-size: 1.4rem; }
+.tourkarte__werte { color: var(--grau); margin: 0 0 0.75rem; }
+.tourkarte__fuss {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.tourkarte--angemeldet { border: 2px solid var(--see); }
+
+/* Freie Plätze */
+.plaetze { font-weight: 700; color: var(--see); }
+.plaetze--wenig { color: var(--orange-text); }
+.plaetze--voll { color: var(--grau); }
+
+.angemeldet-marke {
+  display: inline-block;
+  padding: 0.1rem 0.75rem;
+  border-radius: 999px;
+  background: var(--see);
+  color: var(--weiss);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Tour-Details: Werte als Kästen, darunter die Angaben */
+.kennzahlen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin: 1rem 0 1.5rem;
+}
+.kennzahl {
+  margin: 0;
+  background: var(--sand);
+  border-radius: var(--rund);
+  padding: 0.75rem;
+  text-align: center;
+}
+.kennzahl strong {
+  display: block;
+  font-family: var(--schrift-titel);
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: var(--see);
+}
+.kennzahl span { color: var(--grau); font-size: 1rem; }
+
+.angaben { margin: 0; }
+.angaben div { padding: 0.9rem 0; border-top: 1px solid var(--sand-dunkel); }
+.angaben dt { font-weight: 700; }
+.angaben dd { margin: 0.15rem 0 0; color: var(--grau); }
+
+/* Profil und Gastgeber */
+.abschnitt { margin-top: 2rem; }
+.abschnitt:first-child { margin-top: 0; }
+
+.teilnehmer { list-style: none; margin: 0; padding: 0; }
+.teilnehmer li { padding: 0.9rem 0; border-top: 1px solid var(--sand-dunkel); }
+.teilnehmer li:last-child { border-bottom: 1px solid var(--sand-dunkel); }
+.teilnehmer strong { display: block; }
+.teilnehmer span { display: block; color: var(--grau); }
+.teilnehmer a { display: inline-block; min-height: 2.75rem; padding-top: 0.4rem; }
+
+/* Auf sehr schmalen Handys: Formularfelder untereinander */
+@media (max-width: 22rem) {
+  .formular .zwei-spalten { grid-template-columns: 1fr; }
+  .kennzahlen { grid-template-columns: 1fr 1fr; }
+}

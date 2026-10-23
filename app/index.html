@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Allensbacher Sportfreunde – App</title>
+  <meta name="description" content="App-Prototyp der Allensbacher Sportfreunde: Touren ansehen und anmelden.">
+  <meta name="theme-color" content="#2E6B8A">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <!-- Dezenter Hinweis ganz oben: Das ist nur ein Prototyp -->
+  <p class="prototyp-hinweis">Prototyp – Buchungen werden nur auf diesem Gerät gespeichert</p>
+
+  <header class="app-kopf">
+    <a class="app-logo" href="#/touren">Allensbacher Sportfreunde</a>
+  </header>
+
+  <!-- Hier setzt app.js den jeweiligen Bildschirm ein (Touren, Details, Profil ...) -->
+  <main id="inhalt" class="app-inhalt" tabindex="-1"></main>
+
+  <!-- Untere Navigationsleiste – wie in der Skizze im Businessplan -->
+  <nav class="leiste" aria-label="Hauptmenü">
+    <a href="#/touren" data-bereich="touren">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="16.5" r="3.5"/><circle cx="18.5" cy="16.5" r="3.5"/><path d="M5.5 16.5 9 9h6l3.5 7.5M9 9 12 16.5h-1M14 6h2l-1 3"/></svg>
+      <span>Touren</span>
+    </a>
+    <a href="#/meine" data-bereich="meine">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4M9 15l2 2 4-4"/></svg>
+      <span>Meine</span>
+    </a>
+    <a href="#/profil" data-bereich="profil">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+      <span>Profil</span>
+    </a>
+    <a href="#/gastgeber" data-bereich="gastgeber" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 4h11l-2 4 2 4H6"/></svg>
+      <span>Gastgeber</span>
+    </a>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>
