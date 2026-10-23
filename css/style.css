@@ -425,8 +425,8 @@ a:hover { color: var(--tinte); }
 
 /* Auf schmalen Bildschirmen stehen die Werte unter dem Text */
 @media (max-width: 46rem) {
-  .tour { grid-template-columns: auto 1fr; }
-  .tour__werte { grid-column: 1 / -1; text-align: left; }
+  .tour { grid-template-columns: 1fr; }   /* alles untereinander, Nummer über dem Titel */
+  .tour__werte { text-align: left; }
 }
 
 .rennradler {
