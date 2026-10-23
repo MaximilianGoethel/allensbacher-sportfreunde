@@ -295,6 +295,8 @@ a:hover { color: var(--tinte); }
   max-width: 40rem;
   margin: 0 auto;
 }
+.aufruf .einleitung { margin-left: auto; margin-right: auto; }
+.aufruf .knopfreihe { justify-content: center; }
 
 
 /* 5a. Startseite ------------------------------------------------------------ */
