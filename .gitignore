@@ -1,0 +1,6 @@
+# Systemdateien von macOS
+.DS_Store
+
+# Der Businessplan ist interne Planungsgrundlage und soll nicht
+# mit der öffentlichen Website (GitHub Pages) veröffentlicht werden.
+*.pdf
