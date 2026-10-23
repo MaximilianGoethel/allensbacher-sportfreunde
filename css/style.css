@@ -1,0 +1,526 @@
+/* ==========================================================================
+   Allensbacher Sportfreunde – Gestaltung für alle Seiten
+   --------------------------------------------------------------------------
+   Aufbau dieser Datei:
+   1. Farben und Grundwerte (Variablen)
+   2. Grundlagen (Schrift, Abstände, Links)
+   3. Kopfbereich und Navigation
+   4. Bausteine (Abschnitte, Karten, Knöpfe ...)
+   5. Seitenspezifisches (Startseite, Touren, Über uns, Kontakt)
+   6. Fußbereich
+   ========================================================================== */
+
+
+/* 1. Farben und Grundwerte -------------------------------------------------
+   Die Farben stammen aus dem Businessplan. Wer eine Farbe ändern will,
+   ändert sie nur hier – alle Seiten übernehmen sie automatisch. */
+:root {
+  --creme:        #FAF6EF;  /* Seitenhintergrund */
+  --sand:         #F3E8DB;  /* Kästen, Flächen */
+  --sand-dunkel:  #E6D8C6;  /* Rahmenlinien */
+  --see:          #2E6B8A;  /* Seeblau: Hauptfarbe */
+  --see-hell:     #DCEAF1;  /* helles Blau für Flächen */
+  --orange:       #E8834A;  /* Akzent für Flächen und Knöpfe */
+  --orange-text:  #A54817;  /* dunkleres Orange, gut lesbar als Schrift */
+  --orange-hell:  #FBE6D4;
+  --tinte:        #1F2D3A;  /* fast schwarzes Marineblau für Text */
+  --grau:         #4A5561;  /* Nebentexte */
+  --weiss:        #FFFFFF;
+
+  /* Schriften: Serifenschrift für Überschriften, klare Schrift für Text.
+     Es werden Schriften genutzt, die schon auf dem Computer installiert sind –
+     so wird nichts von fremden Servern (z. B. Google) geladen. */
+  --schrift-titel: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --schrift-text:  system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --breite: 72rem;          /* maximale Breite des Inhalts */
+  --rund: 1rem;             /* Eckenradius von Karten */
+}
+
+
+/* 2. Grundlagen -------------------------------------------------------------
+   1rem = 18px. Keine Schrift auf der Seite ist kleiner als 1rem. */
+html {
+  font-size: 112.5%;        /* 112,5 % von 16px = 18px */
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;   /* Breitenangaben schließen Innenabstand mit ein */
+}
+
+body {
+  margin: 0;
+  background: var(--creme);
+  color: var(--tinte);
+  font-family: var(--schrift-text);
+  font-size: 1.1rem;        /* ca. 20px Fließtext */
+  line-height: 1.65;
+}
+
+h1, h2, h3 {
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+}
+
+h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
+h3 { font-size: 1.35rem; }
+
+p { margin: 0 0 1em; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--see); text-underline-offset: 0.2em; }
+a:hover { color: var(--tinte); }
+
+/* Deutlich sichtbarer Rahmen, wenn man mit der Tastatur navigiert */
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Link „Zum Inhalt springen“ – nur sichtbar, wenn man ihn mit Tab erreicht */
+.sprunglink {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  background: var(--tinte);
+  color: var(--weiss);
+  padding: 0.6rem 1rem;
+  z-index: 10;
+}
+.sprunglink:focus { top: 1rem; color: var(--weiss); }
+
+/* Hält den Inhalt mittig und lässt am Rand Platz (auch auf dem Handy) */
+.container {
+  width: 100%;
+  max-width: var(--breite);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+
+/* 3. Kopfbereich und Navigation ------------------------------------------- */
+.kopf {
+  background: var(--creme);
+  border-bottom: 1px solid var(--sand-dunkel);
+}
+
+.kopf .container {
+  display: flex;
+  flex-wrap: wrap;          /* auf schmalen Bildschirmen rutscht das Menü unter das Logo */
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.logo {
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--see);
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.menue ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menue a {
+  display: block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  color: var(--tinte);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.menue a:hover { background: var(--sand); }
+
+/* Die aktuelle Seite wird im Menü blau hervorgehoben */
+.menue a[aria-current="page"] {
+  background: var(--see);
+  color: var(--weiss);
+}
+
+
+/* 4. Bausteine -------------------------------------------------------------- */
+
+/* Ein Abschnitt der Seite mit Abstand nach oben und unten */
+.abschnitt { padding: 3.5rem 0; }
+.abschnitt--sand { background: var(--sand); }
+
+/* Kleine orange Überschrift über der eigentlichen Überschrift, wie im PDF */
+.dachzeile {
+  display: block;
+  font-family: var(--schrift-text);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange-text);
+  margin-bottom: 0.4rem;
+}
+
+.einleitung {
+  font-size: 1.3rem;
+  max-width: 42rem;
+}
+
+.hinweis {
+  color: var(--grau);
+  font-size: 1rem;
+}
+
+/* Kopf der Unterseiten: Titel mit gezeichnetem Panorama darunter */
+.seitenkopf {
+  padding-top: 3rem;
+}
+.seitenkopf .einleitung { margin-bottom: 2rem; }
+.seitenkopf__bild {
+  width: 100%;
+  height: clamp(110px, 18vw, 220px);
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+/* Raster für Karten: passt die Spaltenzahl automatisch an die Bildschirmbreite an */
+.raster {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.25rem;
+}
+
+.karte {
+  background: var(--weiss);
+  border: 1px solid var(--sand-dunkel);
+  border-radius: var(--rund);
+  padding: 1.5rem;
+}
+.karte h3 { font-family: var(--schrift-text); font-size: 1.2rem; margin-bottom: 0.3em; }
+.karte p { color: var(--grau); margin: 0; }
+
+/* Große Zahlen in sandfarbenen Kästen („2 Events pro Woche“) */
+.kennzahl {
+  background: var(--sand);
+  border-radius: var(--rund);
+  padding: 1.25rem 1.5rem;
+}
+.kennzahl strong {
+  display: block;
+  font-family: var(--schrift-titel);
+  font-size: 2.6rem;
+  line-height: 1.1;
+  color: var(--see);
+}
+.kennzahl span { color: var(--grau); }
+
+/* Nummerierte Schritte (1, 2, 3, 4) */
+.schritte {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: schritt;
+}
+.schritte li { counter-increment: schritt; }
+.schritte li::before {
+  content: counter(schritt);
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-bottom: 0.75rem;
+  border-radius: 50%;
+  background: var(--see);
+  color: var(--weiss);
+  font-weight: 700;
+}
+
+/* Knöpfe */
+.knopf {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  border: 2px solid var(--see);
+  border-radius: 999px;
+  background: var(--see);
+  color: var(--weiss);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.knopf:hover { background: var(--tinte); border-color: var(--tinte); color: var(--weiss); }
+
+.knopf--hell { background: transparent; color: var(--see); }
+.knopf--hell:hover { background: var(--see); border-color: var(--see); color: var(--weiss); }
+
+/* Hervorgehobene Hinweisbox mit orangem Strich links */
+.infobox {
+  background: var(--sand);
+  border-left: 5px solid var(--orange);
+  border-radius: 0 var(--rund) var(--rund) 0;
+  padding: 1rem 1.5rem;
+  margin-top: 2rem;
+}
+.infobox p { margin: 0; }
+
+/* Kleine Etiketten, z. B. „Samstag“ oder „Rennrad“ */
+.etikett {
+  display: inline-block;
+  padding: 0.2rem 0.9rem;
+  border-radius: 999px;
+  background: var(--orange-hell);
+  color: #8A3E14;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Abschluss-Aufruf am Seitenende */
+.aufruf {
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+
+/* 5a. Startseite ------------------------------------------------------------ */
+.titelbild {
+  position: relative;
+  background: #C9DFE7;      /* Himmelfarbe, falls das Bild noch lädt */
+}
+.titelbild img {
+  width: 100%;
+  height: clamp(280px, 55vw, 620px);
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.titeltext {
+  padding: 2.5rem 0 1rem;
+}
+.titeltext h1 { margin-bottom: 0.3em; }
+
+.slogan {
+  font-family: var(--schrift-titel);
+  font-style: italic;
+  font-size: clamp(1.4rem, 3.2vw, 1.9rem);
+  color: var(--see);
+  margin-bottom: 0.6em;
+}
+
+.knopfreihe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* Wochenrhythmus: sieben Tage nebeneinander, Mi und Sa hervorgehoben */
+.woche {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.6rem;
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+.woche li {
+  min-height: 7.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--sand-dunkel);
+  border-radius: 0.75rem;
+  background: var(--weiss);
+  font-weight: 700;
+  color: var(--grau);
+}
+.woche .aktiv {
+  background: var(--see);
+  border-color: var(--see);
+  color: var(--weiss);
+}
+.woche .aktiv strong {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: var(--schrift-titel);
+  font-size: 1.3rem;
+}
+.woche .aktiv span { display: block; font-weight: 400; }
+
+/* Auf dem Handy: nur die beiden Event-Tage als große Kästen zeigen */
+@media (max-width: 46rem) {
+  .woche { grid-template-columns: 1fr 1fr; }
+  .woche li:not(.aktiv) { display: none; }
+  .woche li { min-height: 0; }
+}
+
+
+/* 5b. Touren ---------------------------------------------------------------- */
+.touren {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.tour {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.5rem 1.5rem;
+  align-items: start;
+}
+
+.tour__nummer {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: var(--see);
+  color: var(--weiss);
+  font-weight: 700;
+}
+
+.tour h3 { font-family: var(--schrift-titel); font-size: 1.5rem; }
+.tour__route { color: var(--see); font-weight: 600; margin-bottom: 0.3em; }
+.tour__text { color: var(--grau); }
+
+.tour__werte {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  text-align: right;
+}
+.tour__werte div { min-width: 5rem; }
+.tour__werte dt { color: var(--grau); font-size: 1rem; }
+.tour__werte dd {
+  margin: 0;
+  font-family: var(--schrift-titel);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.tour__werte small { font-family: var(--schrift-text); font-size: 1rem; font-weight: 400; color: var(--grau); }
+
+.tour .etikett { margin-top: 0.75rem; }
+
+/* Auf schmalen Bildschirmen stehen die Werte unter dem Text */
+@media (max-width: 46rem) {
+  .tour { grid-template-columns: auto 1fr; }
+  .tour__werte { grid-column: 1 / -1; text-align: left; }
+}
+
+.rennradler {
+  width: min(320px, 70%);
+  margin: 0 auto 1.5rem;
+}
+
+/* Jahreszeiten: Sommer und Winter */
+.saison { border-radius: var(--rund); padding: 1.5rem; }
+.saison--sommer { background: var(--orange-hell); }
+.saison--winter { background: var(--see-hell); }
+.saison h3 { font-size: 1.6rem; margin-bottom: 0.1em; }
+.saison--sommer h3 { color: #8A3E14; }
+.saison--winter h3 { color: var(--see); }
+.saison ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+.saison li {
+  background: var(--weiss);
+  border-radius: 0.6rem;
+  padding: 0.4rem 0.9rem;
+  font-weight: 600;
+}
+
+
+/* 5c. Über uns ---------------------------------------------------------------- */
+.rolle .dachzeile { margin-bottom: 0.2rem; }
+
+
+/* 5d. Kontakt --------------------------------------------------------------- */
+.formular {
+  max-width: 40rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.formular label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.formular input,
+.formular textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #8C9AA6;
+  border-radius: 0.6rem;
+  background: var(--weiss);
+  color: var(--tinte);
+  font: inherit;
+}
+.formular textarea { min-height: 10rem; resize: vertical; }
+
+.formular input:focus,
+.formular textarea:focus {
+  border-color: var(--see);
+  outline: 3px solid var(--see-hell);
+  outline-offset: 0;
+}
+
+/* Rote Umrandung erst, nachdem jemand das Feld verlassen hat */
+.formular .fehler-feld { border-color: #B3261E; }
+.feldfehler { color: #B3261E; font-size: 1rem; margin: 0.3rem 0 0; }
+
+.meldung {
+  padding: 1rem 1.5rem;
+  border-radius: var(--rund);
+  background: var(--see-hell);
+  border-left: 5px solid var(--see);
+}
+.meldung[hidden] { display: none; }
+
+
+/* 6. Fußbereich -------------------------------------------------------------- */
+.fuss {
+  background: var(--tinte);
+  color: #E6ECF1;
+  padding: 2.5rem 0;
+  margin-top: 0;
+}
+.fuss .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.fuss__slogan {
+  font-family: var(--schrift-titel);
+  font-style: italic;
+  font-size: 1.25rem;
+  margin: 0 0 0.3rem;
+}
+.fuss p { margin: 0; }
+.fuss ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; }
+.fuss a { color: var(--weiss); }
+.fuss a:hover { color: var(--orange); }
