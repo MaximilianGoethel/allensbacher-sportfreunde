@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-75 -105 150 112" role="img" aria-labelledby="titel">
+  <title id="titel">Gezeichneter Rennradler im orangen Trikot</title>
+
+  <!-- Schatten auf dem Boden -->
+  <ellipse cx="0" cy="1" rx="68" ry="4" fill="#E6D8C6"/>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- hinteres Bein -->
+    <path d="M-14,-64 L9,-45 L-14,-28" stroke="#3A4856" stroke-width="8"/>
+    <!-- Räder -->
+    <circle cx="-38" cy="-22" r="21" stroke="#1F2D3A" stroke-width="4.5"/>
+    <circle cx="40" cy="-22" r="21" stroke="#1F2D3A" stroke-width="4.5"/>
+    <!-- Rahmen, Gabel, Lenker, Sattel -->
+    <path d="M-38,-22 L-6,-22 L-14,-54 Z M-6,-22 L28,-46 M-14,-52 L26,-56 L28,-46 L40,-22 M26,-57 L34,-58 Q38,-54 35,-48" stroke="#1F2D3A" stroke-width="4"/>
+    <path d="M-24,-61 L-10,-61" stroke="#1F2D3A" stroke-width="4.5"/>
+    <!-- vorderes Bein -->
+    <path d="M-14,-64 L10,-46 L3,-17" stroke="#1F2D3A" stroke-width="8"/>
+    <!-- Oberkörper (Trikot) und Arm -->
+    <path d="M-14,-64 L16,-80" stroke="#E07A3F" stroke-width="12"/>
+    <path d="M16,-80 L28,-70 L34,-58" stroke="#E07A3F" stroke-width="6"/>
+  </g>
+  <!-- Kopf mit Helm -->
+  <circle cx="27" cy="-89" r="7.5" fill="#E3B98F"/>
+  <path d="M18,-89 A9,9 0 0 1 36,-90 Z" fill="#1F2D3A"/>
+</svg>

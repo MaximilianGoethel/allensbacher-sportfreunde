@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-labelledby="titel">
+  <title id="titel">Gezeichnete Bodensee-Landschaft: Alpen, Sonne, Insel mit Kirche und drei Rennradler auf dem Uferweg</title>
+
+  <defs>
+    <!-- Farbverläufe für Himmel und Wasser -->
+    <linearGradient id="himmel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#BFD8E3"/>
+      <stop offset="0.6" stop-color="#E6E4DA"/>
+      <stop offset="1" stop-color="#F7E2C8"/>
+    </linearGradient>
+    <linearGradient id="wasser" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8DBBD0"/>
+      <stop offset="1" stop-color="#3F7A99"/>
+    </linearGradient>
+
+    <!-- Ein Rennradler, einmal gezeichnet und unten dreimal verwendet.
+         Die Trikotfarbe kommt von "color" beim Einsetzen (currentColor). -->
+    <g id="radler" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- hinteres Bein -->
+      <path d="M-14,-64 L9,-45 L-14,-28" stroke="#3A4856" stroke-width="8"/>
+      <!-- Räder -->
+      <circle cx="-38" cy="-22" r="21" stroke="#1F2D3A" stroke-width="4.5"/>
+      <circle cx="40" cy="-22" r="21" stroke="#1F2D3A" stroke-width="4.5"/>
+      <!-- Rahmen, Gabel, Lenker, Sattel -->
+      <path d="M-38,-22 L-6,-22 L-14,-54 Z M-6,-22 L28,-46 M-14,-52 L26,-56 L28,-46 L40,-22 M26,-57 L34,-58 Q38,-54 35,-48" stroke="#1F2D3A" stroke-width="4"/>
+      <path d="M-24,-61 L-10,-61" stroke="#1F2D3A" stroke-width="4.5"/>
+      <!-- vorderes Bein -->
+      <path d="M-14,-64 L10,-46 L3,-17" stroke="#1F2D3A" stroke-width="8"/>
+      <!-- Oberkörper (Trikot) und Arm -->
+      <path d="M-14,-64 L16,-80" stroke="currentColor" stroke-width="12"/>
+      <path d="M16,-80 L28,-70 L34,-58" stroke="currentColor" stroke-width="6"/>
+      <!-- Kopf mit Helm -->
+      <circle cx="27" cy="-89" r="7.5" fill="#E3B98F"/>
+      <path d="M18,-89 A9,9 0 0 1 36,-90 Z" fill="#1F2D3A"/>
+    </g>
+  </defs>
+
+  <!-- Himmel -->
+  <rect width="1200" height="345" fill="url(#himmel)"/>
+
+  <!-- Sonne mit hellem Schein -->
+  <circle cx="880" cy="250" r="125" fill="#F4DFC4" opacity="0.8"/>
+  <circle cx="880" cy="250" r="62" fill="#F2AE72"/>
+
+  <!-- Alpen mit Schneekappen -->
+  <path fill="#B3C4D1" d="M0,340 L0,300 L90,250 L140,285 L200,265 L250,290 L310,235 L380,300 L470,200 L540,280 L600,250 L660,285 L720,215 L790,290 L860,255 L930,285 L1000,225 L1060,290 L1120,260 L1200,285 L1200,340 Z"/>
+  <g fill="#F5F7F8">
+    <path d="M90,250 L101,258 L95,256 L84,260 L74,259 Z"/>
+    <path d="M310,235 L325,249 L317,245 L305,247 L297,247 Z"/>
+    <path d="M470,200 L485,218 L477,212 L462,220 L452,220 Z"/>
+    <path d="M720,215 L735,232 L727,227 L715,230 L707,230 Z"/>
+    <path d="M1000,225 L1013,239 L1006,235 L994,238 L985,238 Z"/>
+  </g>
+
+  <!-- Hügel am anderen Ufer -->
+  <path fill="#97B69C" d="M0,342 L0,318 C200,300 420,312 650,316 C860,320 1020,298 1200,310 L1200,342 Z"/>
+
+  <!-- See -->
+  <rect y="340" width="1200" height="260" fill="url(#wasser)"/>
+
+  <!-- Wellenlinien -->
+  <g stroke="#D3E6EE" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <path d="M60,380 H130 M180,410 H220 M420,372 H500 M540,395 H580 M120,440 H210 M990,378 H1060 M1080,402 H1150 M640,430 H720 M330,455 H400"/>
+  </g>
+
+  <!-- Spiegelung der Sonne im Wasser -->
+  <g stroke="#F6D3A8" stroke-width="5" stroke-linecap="round">
+    <path d="M830,362 H930 M840,382 H920 M850,402 H910 M858,422 H902 M866,442 H894"/>
+  </g>
+
+  <!-- Insel mit Kirche (wie die Reichenau) -->
+  <ellipse cx="300" cy="352" rx="115" ry="11" fill="#7FA37C"/>
+  <g fill="#5E8A5C">
+    <circle cx="232" cy="343" r="10"/><circle cx="249" cy="347" r="7"/>
+    <circle cx="352" cy="343" r="10"/><circle cx="368" cy="347" r="7"/>
+  </g>
+  <rect x="285" y="322" width="14" height="28" fill="#F3E8DB"/>
+  <path d="M283,322 L292,306 L301,322 Z" fill="#C8664A"/>
+  <rect x="299" y="333" width="28" height="17" fill="#F3E8DB"/>
+  <path d="M297,334 L313,325 L329,334 Z" fill="#C8664A"/>
+
+  <!-- Ufer im Vordergrund -->
+  <path fill="#6E9A69" d="M0,482 C250,458 560,490 840,470 C1000,460 1110,468 1200,462 L1200,600 L0,600 Z"/>
+
+  <!-- Schilf -->
+  <g stroke="#4F7A4C" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M1010,472 L1006,440 M1022,470 L1024,432 M1034,471 Q1030,450 1038,436 M1050,469 L1048,446 M1064,468 L1068,428 M1078,468 Q1074,448 1082,440 M1094,467 L1092,438 M1108,466 L1112,432 M1124,466 Q1120,450 1128,442 M1140,465 L1138,436 M1156,465 L1160,440 M1172,464 L1170,430 M1188,464 L1190,444"/>
+  </g>
+
+  <!-- Wiese und Uferweg -->
+  <path fill="#557D56" d="M0,540 C300,526 700,548 1200,530 L1200,600 L0,600 Z"/>
+  <path fill="#EDE3D3" d="M0,512 C300,498 700,520 1200,502 L1200,536 C700,554 300,532 0,546 Z"/>
+  <path fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="22 18" d="M0,529 C300,515 700,537 1200,519"/>
+
+  <!-- Drei Rennradler: orange, seeblau, sand -->
+  <use href="#radler" transform="translate(440,532) scale(1.35)" color="#E07A3F"/>
+  <use href="#radler" transform="translate(640,530) scale(1.35)" color="#2E6B8A"/>
+  <use href="#radler" transform="translate(840,525) scale(1.35)" color="#EFE2CC"/>
+</svg>

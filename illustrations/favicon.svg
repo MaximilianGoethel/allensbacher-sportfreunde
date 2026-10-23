@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Kleines Symbol für den Browser-Tab: Sonne über Berg und See -->
+  <rect width="64" height="64" rx="14" fill="#FAF6EF"/>
+  <circle cx="40" cy="24" r="11" fill="#F2AE72"/>
+  <path d="M6,40 L22,20 L32,32 L40,26 L58,40 Z" fill="#B3C4D1"/>
+  <rect x="6" y="40" width="52" height="16" rx="3" fill="#2E6B8A"/>
+  <path d="M14,47 H28 M34,51 H50" stroke="#DCEAF1" stroke-width="3" stroke-linecap="round"/>
+</svg>

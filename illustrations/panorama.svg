@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 150 1200 330" role="img" aria-labelledby="titel">
+  <title id="titel">Gezeichnetes Panorama: Alpen und Sonne über dem Bodensee, Insel mit Kirche und Schilf am Ufer</title>
+
+  <defs>
+    <linearGradient id="himmel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C9DFE7"/>
+      <stop offset="1" stop-color="#F7E2C8"/>
+    </linearGradient>
+    <linearGradient id="wasser" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8DBBD0"/>
+      <stop offset="1" stop-color="#4A84A2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Himmel -->
+  <rect y="150" width="1200" height="195" fill="url(#himmel)"/>
+
+  <!-- Sonne, diesmal links -->
+  <circle cx="260" cy="265" r="90" fill="#F4DFC4" opacity="0.8"/>
+  <circle cx="260" cy="265" r="45" fill="#F2AE72"/>
+
+  <!-- Alpen -->
+  <path fill="#B3C4D1" d="M0,340 L0,300 L90,250 L140,285 L200,265 L250,290 L310,235 L380,300 L470,200 L540,280 L600,250 L660,285 L720,215 L790,290 L860,255 L930,285 L1000,225 L1060,290 L1120,260 L1200,285 L1200,340 Z"/>
+  <g fill="#F5F7F8">
+    <path d="M90,250 L101,258 L95,256 L84,260 L74,259 Z"/>
+    <path d="M310,235 L325,249 L317,245 L305,247 L297,247 Z"/>
+    <path d="M470,200 L485,218 L477,212 L462,220 L452,220 Z"/>
+    <path d="M720,215 L735,232 L727,227 L715,230 L707,230 Z"/>
+    <path d="M1000,225 L1013,239 L1006,235 L994,238 L985,238 Z"/>
+  </g>
+
+  <!-- Hügel am anderen Ufer -->
+  <path fill="#97B69C" d="M0,342 L0,318 C200,300 420,312 650,316 C860,320 1020,298 1200,310 L1200,342 Z"/>
+
+  <!-- See -->
+  <rect y="340" width="1200" height="140" fill="url(#wasser)"/>
+  <g stroke="#D3E6EE" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <path d="M60,380 H130 M420,372 H500 M540,395 H580 M990,378 H1060 M1080,402 H1150 M640,420 H720"/>
+  </g>
+  <g stroke="#F6D3A8" stroke-width="5" stroke-linecap="round">
+    <path d="M215,362 H305 M225,382 H295 M235,402 H285 M244,422 H276"/>
+  </g>
+
+  <!-- Insel mit Kirche -->
+  <ellipse cx="840" cy="352" rx="115" ry="11" fill="#7FA37C"/>
+  <g fill="#5E8A5C">
+    <circle cx="772" cy="343" r="10"/><circle cx="789" cy="347" r="7"/>
+    <circle cx="892" cy="343" r="10"/><circle cx="908" cy="347" r="7"/>
+  </g>
+  <rect x="825" y="322" width="14" height="28" fill="#F3E8DB"/>
+  <path d="M823,322 L832,306 L841,322 Z" fill="#C8664A"/>
+  <rect x="839" y="333" width="28" height="17" fill="#F3E8DB"/>
+  <path d="M837,334 L853,325 L869,334 Z" fill="#C8664A"/>
+
+  <!-- Ufer mit Schilf -->
+  <path fill="#6E9A69" d="M0,462 C250,440 560,468 840,452 C1000,444 1110,450 1200,446 L1200,480 L0,480 Z"/>
+  <g stroke="#4F7A4C" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M1010,454 L1006,422 M1022,452 L1024,414 M1034,453 Q1030,432 1038,418 M1050,451 L1048,428 M1064,450 L1068,410 M1078,450 Q1074,430 1082,422 M1094,449 L1092,420 M1108,448 L1112,414 M1124,448 Q1120,432 1128,424 M1140,447 L1138,418 M1156,447 L1160,422 M1172,446 L1170,412 M1188,446 L1190,426"/>
+  </g>
+</svg>
