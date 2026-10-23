@@ -226,6 +226,7 @@ h1:focus { outline: none; }
 }
 
 .knopfreihe { display: grid; gap: 0.75rem; margin-top: 1.5rem; }
+.knopfreihe--details { margin: 0 0 1.5rem; }
 
 /* Zurück-Link oben auf Unterseiten */
 .zurueck {
@@ -265,6 +266,7 @@ h1:focus { outline: none; }
 }
 
 .hinweis { color: var(--grau); font-size: 1rem; }
+.hinweis--unten { margin-top: 1.25rem; }
 
 /* Formulare */
 .formular { display: grid; gap: 1.25rem; }
