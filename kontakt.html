@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kontakt – Allensbacher Sportfreunde</title>
+  <meta name="description" content="Nachricht an die Allensbacher Sportfreunde schreiben.">
+  <link rel="icon" href="illustrations/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- "defer": Das Skript startet erst, wenn die Seite fertig geladen ist -->
+  <script src="js/kontakt.js" defer></script>
+</head>
+<body>
+  <a class="sprunglink" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="kopf">
+    <div class="container">
+      <a class="logo" href="index.html">Allensbacher Sportfreunde</a>
+      <nav class="menue" aria-label="Hauptmenü">
+        <ul>
+          <li><a href="index.html">Start</a></li>
+          <li><a href="touren.html">Touren</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="kontakt.html" aria-current="page">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt">
+
+    <section class="seitenkopf">
+      <div class="container">
+        <span class="dachzeile">Kontakt</span>
+        <h1>Schreib uns</h1>
+        <p class="einleitung">Fragen zu den Touren oder Lust mitzumachen? Schick uns eine Nachricht.</p>
+      </div>
+      <img class="seitenkopf__bild" src="illustrations/panorama.svg" width="1200" height="330" alt="">
+    </section>
+
+    <section class="abschnitt">
+      <div class="container">
+
+        <div class="infobox infobox--formular">
+          <p><strong>Hinweis:</strong> Das Formular ist noch im Aufbau. Nachrichten werden derzeit noch nicht verschickt.</p>
+        </div>
+
+        <!-- "required" = Pflichtfeld. Der Browser prüft das selbst, bevor das Formular abgeschickt wird. -->
+        <form class="formular" id="kontaktformular">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+          </div>
+          <div>
+            <label for="nachricht">Nachricht</label>
+            <textarea id="nachricht" name="nachricht" required></textarea>
+          </div>
+          <div>
+            <button class="knopf" type="submit">Nachricht senden</button>
+          </div>
+
+          <!-- Wird vom Skript eingeblendet, nachdem man auf "Senden" geklickt hat -->
+          <p class="meldung" id="formular-meldung" role="status" tabindex="-1" hidden></p>
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="fuss">
+    <div class="container">
+      <div>
+        <p class="fuss__slogan">„Midlife-Crisis? Wir nennen es Trainingsplan.“</p>
+        <p>Allensbacher Sportfreunde – offene Sportgruppe am Bodensee</p>
+      </div>
+      <nav aria-label="Fußmenü">
+        <ul>
+          <li><a href="index.html">Start</a></li>
+          <li><a href="touren.html">Touren</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

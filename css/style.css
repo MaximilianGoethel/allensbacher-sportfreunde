@@ -493,9 +493,7 @@ a:hover { color: var(--tinte); }
   outline-offset: 0;
 }
 
-/* Rote Umrandung erst, nachdem jemand das Feld verlassen hat */
-.formular .fehler-feld { border-color: #B3261E; }
-.feldfehler { color: #B3261E; font-size: 1rem; margin: 0.3rem 0 0; }
+.infobox--formular { margin: 0 0 2rem; max-width: 40rem; }
 
 .meldung {
   padding: 1rem 1.5rem;
