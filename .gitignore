@@ -4,3 +4,6 @@
 # Der Businessplan ist interne Planungsgrundlage und soll nicht
 # mit der öffentlichen Website (GitHub Pages) veröffentlicht werden.
 *.pdf
+
+# Einstellungen für den KI-Assistenten (nicht Teil der Website)
+.claude/
