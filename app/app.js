@@ -217,11 +217,6 @@ function meldungHtml() {
 // 4. Bildschirme --------------------------------------------------------------
 // Jede Funktion liefert den HTML-Text für einen Bildschirm.
 
-function bildschirmPlatzhalter(titel) {
-  return `<h1>${sicher(titel)}</h1>
-    <p class="leer">Dieser Bildschirm kommt im nächsten Schritt.</p>`;
-}
-
 // Eine Tour als Karte in einer Liste. Die ganze Karte ist anklickbar.
 function tourkarte(tour) {
   const angemeldet = binAngemeldet(tour);
@@ -303,6 +298,70 @@ function bildschirmTourDetails(id) {
       je nach Startpunkt abweichend. Danach Einkehr nach Lust und Laune – kein Pflichtprogramm.</p>` : ''}`;
 }
 
+function bildschirmMeineTouren() {
+  const heute = datumAlsText(new Date());
+  const meine = daten.touren
+    .filter(binAngemeldet)
+    .sort(function (a, b) { return a.datum.localeCompare(b.datum); });
+  const kommend = meine.filter(function (tour) { return tour.datum >= heute; });
+  const vorbei = meine.filter(function (tour) { return tour.datum < heute; }).reverse();
+
+  if (meine.length === 0) {
+    return `
+      ${meldungHtml()}
+      <h1>Meine Touren</h1>
+      <p class="leer">Du bist noch für keine Tour angemeldet.</p>
+      <div class="knopfreihe"><a class="knopf" href="#/touren">Touren ansehen</a></div>`;
+  }
+
+  return `
+    ${meldungHtml()}
+    <h1>Meine Touren</h1>
+    <p class="einleitung">Hier stehen alle Touren, für die du angemeldet bist.</p>
+    ${kommend.length
+      ? `<ul class="liste">${kommend.map(tourkarte).join('')}</ul>`
+      : '<p class="leer">Keine kommenden Touren.</p>'}
+    ${vorbei.length ? `
+      <section class="abschnitt">
+        <h2>Schon vorbei</h2>
+        <ul class="liste">${vorbei.map(tourkarte).join('')}</ul>
+      </section>` : ''}`;
+}
+
+function bildschirmProfil() {
+  const p = daten.profil;
+  return `
+    ${meldungHtml()}
+    <h1>Profil</h1>
+
+    <section class="abschnitt">
+      <p class="einleitung">Mit diesen Angaben meldest du dich an. So weiß der Gastgeber,
+        wen er entlang der Route abholt.</p>
+      <form class="formular" id="profil-formular">
+        <div>
+          <label for="profil-name">Name</label>
+          <input id="profil-name" name="name" type="text" autocomplete="name" required value="${sicher(p.name)}">
+        </div>
+        <div>
+          <label for="profil-email">E-Mail</label>
+          <input id="profil-email" name="email" type="email" autocomplete="email" required value="${sicher(p.email)}">
+        </div>
+        <div>
+          <label for="profil-telefon">Telefon <span class="optional">(optional)</span></label>
+          <input id="profil-telefon" name="telefon" type="tel" autocomplete="tel" value="${sicher(p.telefon)}">
+        </div>
+        <button class="knopf" type="submit">Speichern</button>
+      </form>
+    </section>
+
+    <section class="abschnitt">
+      <h2>Prototyp</h2>
+      <p class="hinweis">Alles wird nur in diesem Browser gespeichert. Mit diesem Knopf
+        beginnst du wieder mit frischen Beispieltouren – Profil und Anmeldungen werden gelöscht.</p>
+      <button class="knopf knopf--hell" type="button" data-aktion="zuruecksetzen">Beispieldaten zurücksetzen</button>
+    </section>`;
+}
+
 
 // 5. Knöpfe und Formulare -----------------------------------------------------
 
@@ -343,23 +402,65 @@ function abmelden(id) {
   zeigen();
 }
 
+function profilSpeichern(formular) {
+  daten.profil = {
+    name: formular.elements.name.value.trim(),
+    email: formular.elements.email.value.trim(),
+    telefon: formular.elements.telefon.value.trim()
+  };
+
+  // Bestehende Anmeldungen bekommen die neuen Kontaktdaten
+  daten.touren.forEach(function (tour) {
+    tour.teilnehmer.forEach(function (person) {
+      if (person.ich) Object.assign(person, daten.profil);
+    });
+  });
+  speichern();
+
+  // Kam man von einer Tour, geht es dorthin zurück
+  if (tourNachProfil) {
+    const id = tourNachProfil;
+    tourNachProfil = null;
+    meldung = 'Profil gespeichert. Du kannst dich jetzt anmelden.';
+    location.hash = '#/tour/' + id;
+  } else {
+    meldung = 'Profil gespeichert.';
+    zeigen();
+  }
+}
+
+function zuruecksetzen() {
+  if (!window.confirm('Wirklich alles löschen und mit frischen Beispieltouren beginnen?')) return;
+  daten = startdatenErzeugen();
+  speichern();
+  meldung = 'Die Beispieldaten wurden zurückgesetzt.';
+  zeigen();
+}
+
+const inhaltBereich = document.getElementById('inhalt');
+
 // Ein einziger „Zuhörer“ für alle Knöpfe mit data-aktion="…"
-document.getElementById('inhalt').addEventListener('click', function (ereignis) {
+inhaltBereich.addEventListener('click', function (ereignis) {
   const knopf = ereignis.target.closest('[data-aktion]');
   if (!knopf) return;
   const id = knopf.dataset.id;
   switch (knopf.dataset.aktion) {
     case 'anmelden': anmelden(id); break;
     case 'abmelden': abmelden(id); break;
+    case 'zuruecksetzen': zuruecksetzen(); break;
   }
+});
+
+// Formulare abschicken. Der Browser hat dann schon geprüft, ob alle Pflichtfelder ausgefüllt sind.
+inhaltBereich.addEventListener('submit', function (ereignis) {
+  ereignis.preventDefault();   // sonst würde die Seite neu laden
+  if (ereignis.target.id === 'profil-formular') profilSpeichern(ereignis.target);
 });
 
 
 // 6. Navigation zwischen den Bildschirmen -------------------------------------
 // Die Adresse hinter dem # bestimmt den Bildschirm, z. B. „#/touren“ oder „#/tour/abc“.
 // So funktionieren auch der Zurück-Knopf des Handys und Links auf GitHub Pages.
-
-const inhalt = document.getElementById('inhalt');
 
 function zeigen() {
   const teile = location.hash.replace(/^#\/?/, '').split('/');
@@ -370,12 +471,12 @@ function zeigen() {
   switch (bereich) {
     case 'touren':    html = bildschirmTouren(); break;
     case 'tour':      html = bildschirmTourDetails(teile[1]); menuepunkt = 'touren'; break;
-    case 'meine':     html = bildschirmPlatzhalter('Meine Touren'); break;
-    case 'profil':    html = bildschirmPlatzhalter('Profil'); break;
+    case 'meine':     html = bildschirmMeineTouren(); break;
+    case 'profil':    html = bildschirmProfil(); break;
     default:          html = bildschirmTouren(); menuepunkt = 'touren';
   }
 
-  inhalt.innerHTML = html;
+  inhaltBereich.innerHTML = html;
 
   // Menüpunkt unten hervorheben
   document.querySelectorAll('.leiste a').forEach(function (link) {
@@ -385,7 +486,7 @@ function zeigen() {
 
   // Nach oben springen und die Überschrift „ansteuern“ (hilft Vorleseprogrammen)
   window.scrollTo(0, 0);
-  const ueberschrift = inhalt.querySelector('h1');
+  const ueberschrift = inhaltBereich.querySelector('h1');
   if (ueberschrift) {
     ueberschrift.setAttribute('tabindex', '-1');
     ueberschrift.focus({ preventScroll: true });
