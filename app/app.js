@@ -707,3 +707,11 @@ function zeigen() {
 
 window.addEventListener('hashchange', zeigen);
 zeigen();
+
+// Service Worker anmelden (siehe sw.js), damit die App auch offline startet.
+// Funktioniert nur über http(s), nicht beim Öffnen per Doppelklick (file://).
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  navigator.serviceWorker.register('sw.js').catch(function () {
+    // Kein Problem: Die App läuft dann einfach ohne Offline-Funktion.
+  });
+}

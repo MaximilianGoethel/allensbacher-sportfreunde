@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- App-Icon im Stil der Website: Sonne über den Alpen, darunter der See.
+       Ohne runde Ecken – die rundet das Handy selbst ab. Das Wichtige liegt
+       in der Mitte, damit beim Zuschneiden (Kreis, Tropfen ...) nichts fehlt. -->
+  <rect width="512" height="512" fill="#FAF6EF"/>
+  <circle cx="318" cy="200" r="74" fill="#F2AE72"/>
+  <path d="M0,330 L112,214 L172,262 L256,156 L340,246 L398,204 L512,300 L512,330 Z" fill="#B3C4D1"/>
+  <path d="M256,156 L231,188 L246,182 L256,194 L266,182 L281,188 Z" fill="#FFFFFF"/>
+  <path d="M112,214 L96,231 L108,228 L116,236 L124,226 Z" fill="#FFFFFF"/>
+  <path d="M398,204 L384,218 L395,216 L403,223 L412,214 Z" fill="#FFFFFF"/>
+  <path d="M0,318 Q128,296 256,312 T512,312 L512,340 L0,340 Z" fill="#8FB08A"/>
+  <rect y="336" width="512" height="176" fill="#2E6B8A"/>
+  <path d="M150,392 H290 M222,436 H362" stroke="#DCEAF1" stroke-width="13" stroke-linecap="round"/>
+</svg>
