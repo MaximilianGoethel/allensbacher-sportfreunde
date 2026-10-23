@@ -193,9 +193,9 @@ a:hover { color: var(--tinte); }
 .seitenkopf .einleitung { margin-bottom: 2rem; }
 .seitenkopf__bild {
   width: 100%;
-  height: clamp(110px, 18vw, 220px);
-  object-fit: cover;
-  object-position: center bottom;
+  height: clamp(140px, 22vw, 300px);
+  object-fit: cover;          /* füllt die Fläche, schneidet bei Bedarf etwas ab */
+  object-position: center 60%;
 }
 
 /* Raster für Karten: passt die Spaltenzahl automatisch an die Bildschirmbreite an */
@@ -396,9 +396,11 @@ a:hover { color: var(--tinte); }
   font-weight: 700;
 }
 
-.tour h3 { font-family: var(--schrift-titel); font-size: 1.5rem; }
-.tour__route { color: var(--see); font-weight: 600; margin-bottom: 0.3em; }
-.tour__text { color: var(--grau); }
+.tour h2 { font-size: 1.5rem; margin-bottom: 0.3em; }
+/* ".tour" davor, damit diese Regeln stärker sind als ".karte p" weiter oben */
+.tour .tour__route { color: var(--see); font-weight: 600; margin-bottom: 0.3em; }
+.tour .tour__text { color: var(--grau); }
+.tour .tour__passt { margin-top: 0.75rem; }
 
 .tour__werte {
   display: flex;
@@ -417,7 +419,7 @@ a:hover { color: var(--tinte); }
 }
 .tour__werte small { font-family: var(--schrift-text); font-size: 1rem; font-weight: 400; color: var(--grau); }
 
-.tour .etikett { margin-top: 0.75rem; }
+.touren + .hinweis { margin-top: 1.5rem; }
 
 /* Auf schmalen Bildschirmen stehen die Werte unter dem Text */
 @media (max-width: 46rem) {
